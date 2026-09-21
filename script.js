@@ -396,32 +396,59 @@ playButtons.forEach((button) => {
      podremos colocar canciones y modificar este arreglo:
 
        const playlist = [
-         {
-           title: "Neon Night",
-           file: "music/neon-night.mp3"
-         }
-       ];
-
-     Por ahora usamos el reproductor como interfaz preparada.
-  */
-
-  const playlist = [
-    {
-      title: "Playlist Gamer",
-      file: ""
-    },
-
-    {
-      title: "Neon Night",
-      file: ""
-    },
-
-    {
-      title: "Cyber Drive",
-      file: ""
-    }
-  ];
-
+  {
+    title: "Rochy RD - Ella No Es Tuya",
+    file: "Rochy RD - Ella No Es Tuya _ Video Oficial-128kbps.mp3"
+  },
+  {
+    title: "EL JUIDERO - Chimbala x Bulin 47",
+    file: "EL JUIDERO - Chimbala x Bulin 47 (Video Oficial) 4-128kbps.mp3"
+  },
+  {
+    title: "El Alfa El Jefe - Gogo Dance",
+    file: "El Alfa El Jefe - Gogo Dance (Video Oficial) #ElAlfaSabiduria 4-128kbps.mp3"
+  },
+  {
+    title: "OZUNA - Baje con trenza Remix",
+    file: "OZUNA ft El Cherry Scom y Kiko El Crazy - Baje con trenza Remix (Video Oficial)-128kbps.mp3"
+  },
+  {
+    title: "LIL NAAY - PRENDE",
+    file: "LIL NAAY - PRENDE VIDEO OFFICIAL-128kbps.mp3"
+  },
+  {
+    title: "LIL NAAY - UNA BABY EN SANTIAGO",
+    file: "LIL NAAY - UNA BABY EN SANTIAGO (VIDEO OFICIAL)-128kbps.mp3"
+  },
+  {
+    title: "LIL NAAY - MOOD BRAZIL",
+    file: "LIL NAAY - MOOD BRAZIL (VIDEO OFICAL)-128kbps.mp3"
+  },
+  {
+    title: "Skokka - HUAN 62",
+    file: "Skokka - HUAN 62 - (video Oficial)-128kbps.mp3"
+  },
+  {
+    title: "Rochy RD - UVA BOMBOM",
+    file: "Rochy RD - UVA 🍇 BOMBOM _ Video Oficial x Chuky De Lewa 4-128kbps.mp3"
+  },
+  {
+    title: "DILON BABY - FLOW DE 30",
+    file: "DILON BABY - FLOW DE 30 🔪-128kbps.mp3"
+  },
+  {
+    title: "DILON BABY - DOMINICANO",
+    file: "DILON BABY- DOMINICANO 🇩🇴 _@LeordProduciendo_-128kbps.mp3"
+  },
+  {
+    title: "Bulin 47 - Me La Sube",
+    file: "Bulin 47 - Me La Sube (Official Video)-128kbps.mp3"
+  },
+  {
+    title: "Bulin 47 X Ceky Viciny - Ta Talde Pah",
+    file: "Bulin 47 X Ceky Viciny - Ta Talde Pah (Official Video)-128kbps.mp3"
+  }
+];
   let currentSong = 0;
 
   let audio = null;
