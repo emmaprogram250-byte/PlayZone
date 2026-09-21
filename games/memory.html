@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Memory — PLAYZONE</title>
+  <link rel="stylesheet" href="../style.css">
+
+  <style>
+    .memory-page {
+      min-height: 100vh;
+      padding: 100px 20px 120px;
+      text-align: center;
+    }
+
+    .memory-container {
+      max-width: 650px;
+      margin: auto;
+    }
+
+    .memory-container h1 {
+      font-size: clamp(2rem, 6vw, 4rem);
+    }
+
+    .memory-container h1 span {
+      color: #a855f7;
+    }
+
+    .stats {
+      margin: 20px;
+      font-size: 1.1rem;
+    }
+
+    .memory-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      max-width: 520px;
+      margin: 30px auto;
+    }
+
+    .card {
+      aspect-ratio: 1;
+      border: 0;
+      border-radius: 15px;
+      background: #171729;
+      color: white;
+      font-size: 2rem;
+      cursor: pointer;
+      transition: transform .2s, background .2s;
+    }
+
+    .card:hover {
+      transform: scale(1.04);
+      background: #252542;
+    }
+
+    .card.open,
+    .card.matched {
+      background: #7c3aed;
+    }
+
+    .card.matched {
+      opacity: .65;
+      cursor: default;
+    }
+
+    .back-button,
+    .restart {
+      display: inline-block;
+      border: 0;
+      border-radius: 12px;
+      padding: 12px 20px;
+      background: #171729;
+      color: white;
+      text-decoration: none;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    .restart:hover,
+    .back-button:hover {
+      background: #7c3aed;
+    }
+
+    #message {
+      min-height: 25px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="memory-page">
+    <div class="memory-container">
+
+      <a href="../index.html" class="back-button">
+        ← Volver a PLAYZONE
+      </a>
+
+      <h1>🧠 <span>Memory</span></h1>
+
+      <p>Encuentra todas las parejas.</p>
+
+      <div class="stats">
+        Movimientos: <strong id="moves">0</strong>
+      </div>
+
+      <div id="grid" class="memory-grid"></div>
+
+      <p id="message"></p>
+
+      <button id="restart" class="restart">
+        🔄 Reiniciar
+      </button>
+
+    </div>
+  </main>
+
+  <script>
+    const grid = document.getElementById("grid");
+    const movesElement = document.getElementById("moves");
+    const message = document.getElementById("message");
+    const restart = document.getElementById("restart");
+
+    const symbols = [
+      "🎮", "🎮",
+      "🚀", "🚀",
+      "👾", "👾",
+      "⚡", "⚡",
+      "🔥", "🔥",
+      "💎", "💎",
+      "🎯", "🎯",
+      "🕹️", "🕹️"
+    ];
+
+    let firstCard = null;
+    let secondCard = null;
+    let lockBoard = false;
+    let moves = 0;
+    let matched = 0;
+
+    function shuffle(array) {
+      return array.sort(() => Math.random() - 0.5);
+    }
+
+    function startGame() {
+      grid.innerHTML = "";
+      message.textContent = "";
+
+      firstCard = null;
+      secondCard = null;
+      lockBoard = false;
+      moves = 0;
+      matched = 0;
+
+      movesElement.textContent = moves;
+
+      shuffle([...symbols]).forEach(symbol => {
+        const card = document.createElement("button");
+
+        card.className = "card";
+        card.dataset.symbol = symbol;
+        card.textContent = "❔";
+
+        card.addEventListener("click", () => flipCard(card));
+
+        grid.appendChild(card);
+      });
+    }
+
+    function flipCard(card) {
+      if (
+        lockBoard ||
+        card === firstCard ||
+        card.classList.contains("matched")
+      ) {
+        return;
+      }
+
+      card.classList.add("open");
+      card.textContent = card.dataset.symbol;
+
+      if (!firstCard) {
+        firstCard = card;
+        return;
+      }
+
+      secondCard = card;
+      moves++;
+      movesElement.textContent = moves;
+
+      checkMatch();
+    }
+
+    function checkMatch() {
+      const match =
+        firstCard.dataset.symbol === secondCard.dataset.symbol;
+
+      if (match) {
+        firstCard.classList.add("matched");
+        secondCard.classList.add("matched");
+
+        matched += 2;
+
+        resetTurn();
+
+        if (matched === symbols.length) {
+          message.textContent =
+            `🎉 ¡Completaste Memory en ${moves} movimientos!`;
+        }
+
+      } else {
+        lockBoard = true;
+
+        setTimeout(() => {
+          firstCard.classList.remove("open");
+          secondCard.classList.remove("open");
+
+          firstCard.textContent = "❔";
+          secondCard.textContent = "❔";
+
+          resetTurn();
+        }, 700);
+      }
+    }
+
+    function resetTurn() {
+      firstCard = null;
+      secondCard = null;
+      lockBoard = false;
+    }
+
+    restart.addEventListener("click", startGame);
+
+    startGame();
+  </script>
+
+</body>
+</html>
