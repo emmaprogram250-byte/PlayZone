@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reaction Test — PLAYZONE</title>
+  <link rel="stylesheet" href="../style.css">
+
+  <style>
+    .reaction-page {
+      min-height: 100vh;
+      padding: 100px 20px 120px;
+      text-align: center;
+    }
+
+    .reaction-container {
+      max-width: 800px;
+      margin: auto;
+    }
+
+    .reaction-container h1 {
+      font-size: clamp(2rem, 6vw, 4rem);
+    }
+
+    .reaction-container h1 span {
+      color: #a855f7;
+    }
+
+    .reaction-box {
+      width: min(700px, 95vw);
+      height: 400px;
+      margin: 30px auto;
+      border-radius: 25px;
+      background: #171729;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      user-select: none;
+      transition: background .15s;
+      border: 2px solid #292943;
+    }
+
+    .reaction-box.ready {
+      background: #7c3aed;
+    }
+
+    .reaction-box.go {
+      background: #16a34a;
+    }
+
+    .reaction-box.too-soon {
+      background: #dc2626;
+    }
+
+    .reaction-text {
+      font-size: clamp(1.5rem, 4vw, 3rem);
+      font-weight: 700;
+      padding: 20px;
+    }
+
+    .result {
+      min-height: 35px;
+      font-size: 1.3rem;
+    }
+
+    .back-button {
+      display: inline-block;
+      padding: 12px 20px;
+      border-radius: 12px;
+      background: #171729;
+      color: white;
+      text-decoration: none;
+    }
+
+    .back-button:hover {
+      background: #7c3aed;
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="reaction-page">
+    <div class="reaction-container">
+
+      <a href="../index.html" class="back-button">
+        ← Volver a PLAYZONE
+      </a>
+
+      <h1>⚡ <span>Reaction Test</span></h1>
+
+      <p>
+        Espera a que cambie de color y haz clic lo más rápido posible.
+      </p>
+
+      <div id="box" class="reaction-box">
+        <div id="text" class="reaction-text">
+          Haz clic para comenzar
+        </div>
+      </div>
+
+      <div id="result" class="result"></div>
+
+    </div>
+  </main>
+
+  <script>
+    const box = document.getElementById("box");
+    const text = document.getElementById("text");
+    const result = document.getElementById("result");
+
+    let state = "idle";
+    let startTime = 0;
+    let timer = null;
+
+    box.addEventListener("click", () => {
+
+      if (state === "idle") {
+        startTest();
+        return;
+      }
+
+      if (state === "waiting") {
+        clearTimeout(timer);
+
+        state = "idle";
+
+        box.className = "reaction-box too-soon";
+        text.textContent = "❌ Demasiado pronto";
+
+        result.textContent =
+          "Haz clic para intentarlo nuevamente.";
+
+        setTimeout(reset, 1000);
+
+        return;
+      }
+
+      if (state === "ready") {
+        const reactionTime =
+          performance.now() - startTime;
+
+        state = "idle";
+
+        box.className = "reaction-box";
+        text.textContent =
+          `${Math.round(reactionTime)} ms`;
+
+        result.textContent =
+          "⚡ Haz clic para volver a jugar.";
+
+        setTimeout(reset, 1200);
+      }
+    });
+
+    function startTest() {
+      state = "waiting";
+
+      box.className = "reaction-box ready";
+      text.textContent =
+        "🟣 Espera...";
+
+      result.textContent = "";
+
+      const delay =
+        1500 + Math.random() * 3500;
+
+      timer = setTimeout(() => {
+        state = "ready";
+
+        box.className = "reaction-box go";
+        text.textContent =
+          "🟢 ¡AHORA!";
+
+        startTime = performance.now();
+      }, delay);
+    }
+
+    function reset() {
+      state = "idle";
+      box.className = "reaction-box";
+      text.textContent = "Haz clic para comenzar";
+      result.textContent = "";
+    }
+  </script>
+
+</body>
+</html>
