@@ -1,26 +1,23 @@
+```html
 <!DOCTYPE html>
-
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <title>Snake — PLAYZONE</title>
-
   <link rel="stylesheet" href="../style.css">
 
   <style>
     .game-page {
       min-height: 100vh;
-      padding: 100px 20px 120px;
+      padding: 100px 20px;
       display: flex;
       justify-content: center;
       align-items: center;
-      box-sizing: border-box;
     }
 
     .game-container {
-      width: min(650px, 100%);
+      width: min(700px, 100%);
       text-align: center;
     }
 
@@ -33,100 +30,31 @@
       color: #a855f7;
     }
 
-    .instructions {
-      margin-bottom: 15px;
-      opacity: .85;
-    }
-
     .score {
       font-size: 1.2rem;
-      margin: 15px;
+      margin: 20px;
     }
 
-    .canvas-wrapper {
-      display: flex;
-      justify-content: center;
-      width: 100%;
-    }
-
-    canvas {
+    #game {
       display: block;
       width: min(500px, 90vw);
       height: min(500px, 90vw);
-      max-width: 500px;
-      max-height: 500px;
-      aspect-ratio: 1 / 1;
+      margin: 0 auto;
       background: #090914;
       border: 2px solid #8b5cf6;
       border-radius: 16px;
       box-shadow: 0 0 40px rgba(139, 92, 246, .25);
-      touch-action: none;
-    }
-
-    #message {
-      min-height: 28px;
-      margin: 15px;
-      font-weight: 600;
     }
 
     .controls {
-      margin: 20px auto 0;
-      display: grid;
-      grid-template-columns: repeat(3, 65px);
-      grid-template-rows: repeat(2, 65px);
-      gap: 8px;
-      justify-content: center;
-    }
-
-    .controls button {
-      border: 0;
-      border-radius: 12px;
-      cursor: pointer;
-      background: #171729;
-      color: white;
-      font-size: 1.4rem;
-      transition: transform .1s, background .15s;
-      touch-action: manipulation;
-    }
-
-    .controls button:hover {
-      background: #7c3aed;
-    }
-
-    .controls button:active {
-      transform: scale(.92);
-      background: #8b5cf6;
-    }
-
-    #up {
-      grid-column: 2;
-      grid-row: 1;
-    }
-
-    #left {
-      grid-column: 1;
-      grid-row: 2;
-    }
-
-    #down {
-      grid-column: 2;
-      grid-row: 2;
-    }
-
-    #right {
-      grid-column: 3;
-      grid-row: 2;
-    }
-
-    .game-actions {
-      margin-top: 18px;
+      margin-top: 20px;
       display: flex;
       justify-content: center;
       gap: 10px;
       flex-wrap: wrap;
     }
 
-    .game-actions button,
+    .controls button,
     .back-button {
       border: 0;
       border-radius: 12px;
@@ -135,448 +63,61 @@
       background: #171729;
       color: white;
       font-size: 1rem;
-      text-decoration: none;
-      display: inline-block;
     }
 
-    .game-actions button:hover,
+    .controls button:hover,
     .back-button:hover {
       background: #7c3aed;
     }
 
     .back-button {
+      display: inline-block;
       margin-bottom: 25px;
+      text-decoration: none;
+    }
+
+    #message {
+      min-height: 25px;
+      margin: 15px;
+      font-weight: bold;
     }
   </style>
-
 </head>
 
 <body>
 
   <main class="game-page">
+    <div class="game-container">
 
-```
-<div class="game-container">
+      <a href="../index.html" class="back-button">
+        ← Volver a PLAYZONE
+      </a>
 
-  <a href="../index.html" class="back-button">
-    ← Volver a PLAYZONE
-  </a>
+      <h1>🐍 <span>Snake</span></h1>
 
-  <h1>🐍 <span>Snake</span></h1>
+      <p>Usa las flechas o WASD para moverte.</p>
 
-  <p class="instructions">
-    Usa las flechas o WASD para moverte.
-  </p>
+      <div class="score">
+        Puntuación: <strong id="score">0</strong>
+      </div>
 
-  <div class="score">
-    Puntuación:
-    <strong id="score">0</strong>
-  </div>
+      <canvas id="game" width="500" height="500"></canvas>
 
-  <div class="canvas-wrapper">
-    <canvas id="game" width="500" height="500"></canvas>
-  </div>
+      <p id="message"></p>
 
-  <p id="message"></p>
+      <div class="controls">
+        <button type="button" id="up">⬆️</button>
+        <button type="button" id="left">⬅️</button>
+        <button type="button" id="down">⬇️</button>
+        <button type="button" id="right">➡️</button>
+        <button type="button" id="restart">🔄 Reiniciar</button>
+      </div>
 
-  <div class="controls">
-
-    <button id="up" type="button" aria-label="Arriba">
-      ⬆️
-    </button>
-
-    <button id="left" type="button" aria-label="Izquierda">
-      ⬅️
-    </button>
-
-    <button id="down" type="button" aria-label="Abajo">
-      ⬇️
-    </button>
-
-    <button id="right" type="button" aria-label="Derecha">
-      ➡️
-    </button>
-
-  </div>
-
-  <div class="game-actions">
-
-    <button id="restart" type="button">
-      🔄 Reiniciar
-    </button>
-
-  </div>
-
-</div>
-```
-
+    </div>
   </main>
 
-  <script>
-    "use strict";
-
-    const canvas = document.getElementById("game");
-    const ctx = canvas.getContext("2d");
-
-    const scoreElement = document.getElementById("score");
-    const messageElement = document.getElementById("message");
-
-    const upButton = document.getElementById("up");
-    const downButton = document.getElementById("down");
-    const leftButton = document.getElementById("left");
-    const rightButton = document.getElementById("right");
-    const restartButton = document.getElementById("restart");
-
-    const CELL_SIZE = 25;
-    const GRID_SIZE = canvas.width / CELL_SIZE;
-    const SPEED = 110;
-
-    let snake = [];
-    let food = null;
-
-    let direction = "right";
-    let nextDirection = "right";
-
-    let score = 0;
-    let gameOver = false;
-    let gameLoop = null;
-
-
-    function startGame() {
-
-      clearInterval(gameLoop);
-
-      snake = [
-        { x: 10, y: 10 },
-        { x: 9, y: 10 },
-        { x: 8, y: 10 }
-      ];
-
-      direction = "right";
-      nextDirection = "right";
-
-      score = 0;
-      gameOver = false;
-
-      scoreElement.textContent = "0";
-      messageElement.textContent = "";
-
-      createFood();
-      draw();
-
-      gameLoop = setInterval(update, SPEED);
-    }
-
-
-    function createFood() {
-
-      let validPosition = false;
-
-      while (!validPosition) {
-
-        food = {
-          x: Math.floor(Math.random() * GRID_SIZE),
-          y: Math.floor(Math.random() * GRID_SIZE)
-        };
-
-        validPosition = !snake.some(
-          part =>
-            part.x === food.x &&
-            part.y === food.y
-        );
-      }
-    }
-
-
-    function update() {
-
-      if (gameOver) {
-        return;
-      }
-
-      direction = nextDirection;
-
-      const head = {
-        x: snake[0].x,
-        y: snake[0].y
-      };
-
-
-      if (direction === "up") {
-        head.y--;
-      }
-
-      if (direction === "down") {
-        head.y++;
-      }
-
-      if (direction === "left") {
-        head.x--;
-      }
-
-      if (direction === "right") {
-        head.x++;
-      }
-
-
-      const hitWall =
-        head.x < 0 ||
-        head.x >= GRID_SIZE ||
-        head.y < 0 ||
-        head.y >= GRID_SIZE;
-
-
-      const hitSelf = snake.some(
-        part =>
-          part.x === head.x &&
-          part.y === head.y
-      );
-
-
-      if (hitWall || hitSelf) {
-        endGame();
-        return;
-      }
-
-
-      snake.unshift(head);
-
-
-      const ateFood =
-        head.x === food.x &&
-        head.y === food.y;
-
-
-      if (ateFood) {
-
-        score++;
-
-        scoreElement.textContent = score;
-
-        createFood();
-
-      } else {
-
-        snake.pop();
-
-      }
-
-
-      draw();
-    }
-
-
-    function draw() {
-
-      ctx.clearRect(
-        0,
-        0,
-        canvas.width,
-        canvas.height
-      );
-
-
-      // Fondo
-      ctx.fillStyle = "#090914";
-
-      ctx.fillRect(
-        0,
-        0,
-        canvas.width,
-        canvas.height
-      );
-
-
-      // Cuadrícula
-      ctx.strokeStyle = "rgba(255,255,255,.035)";
-      ctx.lineWidth = 1;
-
-      for (let i = 0; i <= GRID_SIZE; i++) {
-
-        const position = i * CELL_SIZE;
-
-        ctx.beginPath();
-        ctx.moveTo(position, 0);
-        ctx.lineTo(position, canvas.height);
-        ctx.stroke();
-
-        ctx.beginPath();
-        ctx.moveTo(0, position);
-        ctx.lineTo(canvas.width, position);
-        ctx.stroke();
-      }
-
-
-      // Comida
-      if (food) {
-
-        ctx.fillStyle = "#ef4444";
-
-        ctx.beginPath();
-
-        ctx.arc(
-          food.x * CELL_SIZE + CELL_SIZE / 2,
-          food.y * CELL_SIZE + CELL_SIZE / 2,
-          CELL_SIZE / 2 - 4,
-          0,
-          Math.PI * 2
-        );
-
-        ctx.fill();
-      }
-
-
-      // Serpiente
-      snake.forEach((part, index) => {
-
-        ctx.fillStyle =
-          index === 0
-            ? "#c084fc"
-            : "#8b5cf6";
-
-        ctx.fillRect(
-          part.x * CELL_SIZE + 2,
-          part.y * CELL_SIZE + 2,
-          CELL_SIZE - 4,
-          CELL_SIZE - 4
-        );
-
-      });
-
-    }
-
-
-    function endGame() {
-
-      gameOver = true;
-
-      clearInterval(gameLoop);
-
-      messageElement.textContent =
-        `💥 Game Over — puntuación: ${score}`;
-
-    }
-
-
-    function changeDirection(newDirection) {
-
-      const opposite = {
-        up: "down",
-        down: "up",
-        left: "right",
-        right: "left"
-      };
-
-
-      if (
-        opposite[direction] === newDirection
-      ) {
-        return;
-      }
-
-
-      nextDirection = newDirection;
-    }
-
-
-    document.addEventListener(
-      "keydown",
-      function(event) {
-
-        const key = event.key;
-
-        if (
-          key === "ArrowUp" ||
-          key === "w" ||
-          key === "W"
-        ) {
-
-          event.preventDefault();
-          changeDirection("up");
-
-        }
-
-
-        if (
-          key === "ArrowDown" ||
-          key === "s" ||
-          key === "S"
-        ) {
-
-          event.preventDefault();
-          changeDirection("down");
-
-        }
-
-
-        if (
-          key === "ArrowLeft" ||
-          key === "a" ||
-          key === "A"
-        ) {
-
-          event.preventDefault();
-          changeDirection("left");
-
-        }
-
-
-        if (
-          key === "ArrowRight" ||
-          key === "d" ||
-          key === "D"
-        ) {
-
-          event.preventDefault();
-          changeDirection("right");
-
-        }
-
-      }
-    );
-
-
-    upButton.addEventListener(
-      "click",
-      function() {
-        changeDirection("up");
-      }
-    );
-
-
-    downButton.addEventListener(
-      "click",
-      function() {
-        changeDirection("down");
-      }
-    );
-
-
-    leftButton.addEventListener(
-      "click",
-      function() {
-        changeDirection("left");
-      }
-    );
-
-
-    rightButton.addEventListener(
-      "click",
-      function() {
-        changeDirection("right");
-      }
-    );
-
-
-    restartButton.addEventListener(
-      "click",
-      startGame
-    );
-
-
-    startGame();
-
-  </script>
+  <script src="snake.js"></script>
 
 </body>
 </html>
+```
