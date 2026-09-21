@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>2048 — PLAYZONE</title>
+<link rel="stylesheet" href="../style.css">
+<style>
+.game-page{min-height:100vh;padding:90px 20px 120px;text-align:center}
+.game-container{max-width:520px;margin:auto}
+.game-container h1{font-size:clamp(2rem,7vw,4rem)}
+.game-container h1 span{color:#a855f7}
+.back{display:inline-block;padding:12px 20px;border-radius:12px;background:#171729;color:white;text-decoration:none}
+.score{margin:20px;font-size:1.2rem}
+.board{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;background:#171729;padding:10px;border-radius:18px}
+.tile{aspect-ratio:1;border-radius:10px;background:#292943;display:flex;align-items:center;justify-content:center;font-size:clamp(1.3rem,6vw,2.3rem);font-weight:bold}
+.controls{margin-top:20px;display:flex;justify-content:center;gap:8px;flex-wrap:wrap}
+button{border:0;border-radius:10px;padding:12px 18px;background:#171729;color:white;cursor:pointer}
+button:hover{background:#7c3aed}
+</style>
+</head>
+<body>
+
+<main class="game-page">
+<div class="game-container">
+
+<a href="../index.html" class="back">← Volver a PLAYZONE</a>
+
+<h1>🔢 <span>2048</span></h1>
+<p>Usa las flechas o WASD para combinar los números.</p>
+
+<div class="score">Puntuación: <strong id="score">0</strong></div>
+
+<div id="board" class="board"></div>
+
+<p id="message"></p>
+
+<div class="controls">
+<button onclick="move('up')">⬆️</button>
+<button onclick="move('left')">⬅️</button>
+<button onclick="move('down')">⬇️</button>
+<button onclick="move('right')">➡️</button>
+<button onclick="newGame()">🔄 Reiniciar</button>
+</div>
+
+</div>
+</main>
+
+<script>
+const board=document.getElementById("board");
+const scoreEl=document.getElementById("score");
+const message=document.getElementById("message");
+
+let grid=[];
+let score=0;
+
+function newGame(){
+ grid=Array(16).fill(0);
+ score=0;
+ message.textContent="";
+ addTile();
+ addTile();
+ draw();
+}
+
+function addTile(){
+ const empty=grid.map((v,i)=>v===0?i:null).filter(v=>v!==null);
+ if(!empty.length)return;
+ const pos=empty[Math.floor(Math.random()*empty.length)];
+ grid[pos]=Math.random()<.9?2:4;
+}
+
+function draw(){
+ board.innerHTML="";
+ grid.forEach(value=>{
+   const tile=document.createElement("div");
+   tile.className="tile";
+   tile.textContent=value||"";
+   board.appendChild(tile);
+ });
+ scoreEl.textContent=score;
+}
+
+function compress(line){
+ return line.filter(v=>v!==0);
+}
+
+function merge(line){
+ line=compress(line);
+ for(let i=0;i<line.length-1;i++){
+   if(line[i]===line[i+1]){
+     line[i]*=2;
+     score+=line[i];
+     line[i+1]=0;
+   }
+ }
+ return compress(line);
+}
+
+function move(dir){
+ let old=grid.join(",");
+ let rows=[];
+
+ for(let r=0;r<4;r++)
+   rows.push(grid.slice(r*4,r*4+4));
+
+ if(dir==="left"){
+   rows=rows.map(merge);
+ }
+
+ if(dir==="right"){
+   rows=rows.map(row=>merge(row.reverse()).reverse());
+ }
+
+ if(dir==="up"||dir==="down"){
+   for(let c=0;c<4;c++){
+     let col=[];
+     for(let r=0;r<4;r++) col.push(grid[r*4+c]);
+
+     if(dir==="up") col=merge(col);
+     else col=merge(col.reverse()).reverse();
+
+     for(let r=0;r<4;r++) rows[r][c]=col[r]||0;
+   }
+ }
+
+ grid=rows.flat();
+
+ if(grid.join(",")!==old){
+   addTile();
+ }
+
+ draw();
+ checkGame();
+}
+
+function checkGame(){
+ if(grid.includes(2048)){
+   message.textContent="🎉 ¡Llegaste a 2048!";
+ }
+
+ if(!grid.includes(0)){
+   let possible=false;
+
+   for(let r=0;r<4;r++){
+     for(let c=0;c<4;c++){
+       const i=r*4+c;
+
+       if(c<3&&grid[i]===grid[i+1])possible=true;
+       if(r<3&&grid[i]===grid[i+4])possible=true;
+     }
+   }
+
+   if(!possible){
+     message.textContent="💥 No quedan movimientos.";
+   }
+ }
+}
+
+document.addEventListener("keydown",e=>{
+ const keys={
+  ArrowUp:"up",w:"up",W:"up",
+  ArrowDown:"down",s:"down",S:"down",
+  ArrowLeft:"left",a:"left",A:"left",
+  ArrowRight:"right",d:"right",D:"right"
+ };
+
+ if(keys[e.key]){
+   e.preventDefault();
+   move(keys[e.key]);
+ }
+});
+
+newGame();
+</script>
+
+</body>
+</html>
