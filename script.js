@@ -365,7 +365,11 @@ playButtons.forEach((button) => {
           return;
         }
 
-        openGame(game.name);
+     if (gameLinks[game.name]) {
+  window.location.href = gameLinks[game.name];
+} else {
+  openGame(game.name);
+}
 
       }
     );
