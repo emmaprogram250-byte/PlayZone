@@ -255,7 +255,10 @@ document.addEventListener("DOMContentLoaded", () => {
 const gameLinks = {
   "Snake": "games/snake.html",
   "Memory": "games/memory.html",
-  "Reaction Test": "games/reaction.html"
+  "Reaction Test": "games/reaction.html",
+  "2048": "games/2048.html",
+  "Tic Tac Toe": "games/tic-tac-toe.html",
+  "Click Speed": "games/click-speed.html"
 };
 
 playButtons.forEach((button) => {
