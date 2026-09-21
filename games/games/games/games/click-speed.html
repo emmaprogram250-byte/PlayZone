@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Click Speed — PLAYZONE</title>
+<link rel="stylesheet" href="../style.css">
+
+<style>
+.page{min-height:100vh;padding:90px 20px 120px;text-align:center}
+.container{max-width:750px;margin:auto}
+h1{font-size:clamp(2rem,7vw,4rem)}
+h1 span{color:#a855f7}
+.back{display:inline-block;padding:12px 20px;border-radius:12px;background:#171729;color:white;text-decoration:none}
+.stats{display:flex;justify-content:center;gap:30px;margin:25px;font-size:1.2rem;flex-wrap:wrap}
+.click-area{height:400px;border-radius:25px;background:#171729;border:2px solid #292943;display:flex;align-items:center;justify-content:center;cursor:pointer;user-select:none}
+.click-area:hover{background:#252542}
+.click-text{font-size:2rem;font-weight:bold;padding:20px}
+.restart{margin-top:20px;border:0;border-radius:12px;padding:13px 22px;background:#7c3aed;color:white;cursor:pointer}
+</style>
+</head>
+
+<body>
+
+<main class="page">
+<div class="container">
+
+<a href="../index.html" class="back">← Volver a PLAYZONE</a>
+
+<h1>🖱️ <span>Click Speed</span></h1>
+
+<p>Haz todos los clics que puedas durante 10 segundos.</p>
+
+<div class="stats">
+<div>⏱️ Tiempo: <strong id="time">10</strong>s</div>
+<div>🖱️ Clics: <strong id="clicks">0</strong></div>
+</div>
+
+<div id="area" class="click-area">
+<div id="text" class="click-text">
+Haz clic para comenzar
+</div>
+</div>
+
+<button class="restart" onclick="startGame()">🔄 Reiniciar</button>
+
+</div>
+</main>
+
+<script>
+const area=document.getElementById("area");
+const text=document.getElementById("text");
+const timeEl=document.getElementById("time");
+const clicksEl=document.getElementById("clicks");
+
+let clicks=0;
+let time=10;
+let playing=false;
+let timer=null;
+
+area.addEventListener("click",()=>{
+ if(!playing){
+   startGame();
+   return;
+ }
+
+ clicks++;
+ clicksEl.textContent=clicks;
+});
+
+function startGame(){
+ clearInterval(timer);
+
+ clicks=0;
+ time=10;
+ playing=true;
+
+ clicksEl.textContent=0;
+ timeEl.textContent=10;
+ text.textContent="¡HAZ CLIC!";
+
+ timer=setInterval(()=>{
+   time--;
+   timeEl.textContent=time;
+
+   if(time<=0){
+     endGame();
+   }
+ },1000);
+}
+
+function endGame(){
+ clearInterval(timer);
+ playing=false;
+
+ text.textContent=`🎉 ${clicks} clics`;
+
+ const cps=(clicks/10).toFixed(1);
+
+ timeEl.textContent=0;
+
+ setTimeout(()=>{
+   text.textContent=
+     `${clicks} clics — ${cps} clics/segundo`;
+ },300);
+}
+</script>
+
+</body>
+</html>
