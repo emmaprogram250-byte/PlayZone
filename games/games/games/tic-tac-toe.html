@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Tic Tac Toe — PLAYZONE</title>
+<link rel="stylesheet" href="../style.css">
+
+<style>
+.page{min-height:100vh;padding:90px 20px 120px;text-align:center}
+.container{max-width:550px;margin:auto}
+h1{font-size:clamp(2rem,7vw,4rem)}
+h1 span{color:#a855f7}
+.back{display:inline-block;padding:12px 20px;border-radius:12px;background:#171729;color:white;text-decoration:none}
+.status{font-size:1.3rem;margin:25px}
+.board{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;max-width:420px;margin:auto}
+.cell{aspect-ratio:1;border:0;border-radius:15px;background:#171729;color:white;font-size:clamp(2rem,10vw,4rem);cursor:pointer}
+.cell:hover{background:#292943}
+button.restart{margin-top:25px;border:0;border-radius:12px;padding:13px 22px;background:#7c3aed;color:white;cursor:pointer}
+</style>
+</head>
+
+<body>
+
+<main class="page">
+<div class="container">
+
+<a href="../index.html" class="back">← Volver a PLAYZONE</a>
+
+<h1>❌⭕ <span>Tic Tac Toe</span></h1>
+
+<div id="status" class="status">Turno de ❌</div>
+
+<div id="board" class="board"></div>
+
+<button class="restart" onclick="restart()">🔄 Reiniciar</button>
+
+</div>
+</main>
+
+<script>
+const board=document.getElementById("board");
+const status=document.getElementById("status");
+
+let cells=[];
+let current="X";
+let gameActive=true;
+
+function createBoard(){
+ board.innerHTML="";
+ cells=Array(9).fill("");
+
+ cells.forEach((value,index)=>{
+   const button=document.createElement("button");
+   button.className="cell";
+   button.onclick=()=>play(index);
+   board.appendChild(button);
+ });
+}
+
+function play(index){
+ if(!gameActive||cells[index])return;
+
+ cells[index]=current;
+
+ render();
+
+ if(checkWinner()){
+   status.textContent=`🎉 ¡Ganó ${current==="X"?"❌":"⭕"}!`;
+   gameActive=false;
+   return;
+ }
+
+ if(cells.every(Boolean)){
+   status.textContent="🤝 ¡Empate!";
+   gameActive=false;
+   return;
+ }
+
+ current=current==="X"?"O":"X";
+ status.textContent=`Turno de ${current==="X"?"❌":"⭕"}`;
+}
+
+function render(){
+ [...board.children].forEach((button,i)=>{
+   button.textContent=
+     cells[i]==="X"?"❌":
+     cells[i]==="O"?"⭕":"";
+ });
+}
+
+function checkWinner(){
+ const wins=[
+  [0,1,2],[3,4,5],[6,7,8],
+  [0,3,6],[1,4,7],[2,5,8],
+  [0,4,8],[2,4,6]
+ ];
+
+ return wins.some(([a,b,c])=>
+   cells[a] &&
+   cells[a]===cells[b] &&
+   cells[a]===cells[c]
+ );
+}
+
+function restart(){
+ current="X";
+ gameActive=true;
+ status.textContent="Turno de ❌";
+ createBoard();
+}
+
+restart();
+</script>
+
+</body>
+</html>
