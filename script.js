@@ -252,18 +252,28 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 
-  playButtons.forEach((button) => {
+const gameLinks = {
+  "Snake": "games/snake.html",
+  "Memory": "games/memory.html",
+  "Reaction Test": "games/reaction.html"
+};
 
-    button.addEventListener("click", () => {
+playButtons.forEach((button) => {
 
-      const gameName =
-        button.dataset.game;
+  button.addEventListener("click", () => {
 
-      openGame(gameName);
+    const gameName = button.dataset.game;
 
-    });
+    if (gameLinks[gameName]) {
+      window.location.href = gameLinks[gameName];
+      return;
+    }
+
+    openGame(gameName);
 
   });
+
+});
 
 
   if (closeModalButton) {
