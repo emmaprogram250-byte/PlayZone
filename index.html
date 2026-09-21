@@ -1,5 +1,5 @@
-```html
 <!DOCTYPE html>
+
 <html lang="es">
 <head>
   <meta charset="UTF-8">
@@ -14,457 +14,61 @@
 <body>
 
   <!-- HEADER -->
+
   <header class="site-header">
-    <a href="#" class="logo" aria-label="PLAYZONE inicio">
+    <a href="#inicio" class="logo" aria-label="PLAYZONE inicio">
       <span class="logo-icon">🎮</span>
       <span>PLAY<span>ZONE</span></span>
     </a>
 
-    <nav class="main-nav" aria-label="Navegación principal">
-      <a href="#inicio">Inicio</a>
-      <a href="#juegos">Juegos</a>
-      <a href="#categorias">Categorías</a>
-    </nav>
+```
+<nav class="main-nav" aria-label="Navegación principal">
+  <a href="#inicio">Inicio</a>
+  <a href="#juegos">Juegos</a>
+  <a href="#categorias">Categorías</a>
+</nav>
 
-    <button id="musicToggle" class="music-button" type="button">
-      🎵 Música
-    </button>
+<button id="musicToggle" class="music-button" type="button">
+  🎵 Música
+</button>
+```
+
   </header>
 
-
   <!-- HERO -->
+
   <main id="inicio">
 
-    <section class="hero">
+```
+<section class="hero">
 
-      <div class="hero-content">
+  <div class="hero-content">
 
-        <div class="status-badge">
-          <span class="status-dot"></span>
-          JUEGOS ONLINE GRATIS
-        </div>
-
-        <h1>
-          Juega.
-          <span>Escucha.</span>
-          <br>
-          Diviértete.
-        </h1>
-
-        <p>
-          Descubre juegos rápidos, divertidos y entretenidos.
-          Todo desde tu navegador.
-        </p>
-
-        <div class="hero-buttons">
-          <a href="#juegos" class="primary-button">
-            🎮 Explorar juegos
-          </a>
-
-          <button id="randomGame" class="secondary-button" type="button">
-            🎲 Juego aleatorio
-          </button>
-        </div>
-
-      </div>
-
-      <div class="hero-visual">
-
-        <div class="floating-card card-one">
-          🐍
-          <strong>Snake</strong>
-          <small>Arcade</small>
-        </div>
-
-        <div class="floating-card card-two">
-          🧠
-          <strong>Memory</strong>
-          <small>Mentales</small>
-        </div>
-
-        <div class="floating-card card-three">
-          ⚡
-          <strong>Reaction</strong>
-          <small>Reflejos</small>
-        </div>
-
-        <div class="game-orb">
-          <span>🎮</span>
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- SEARCH -->
-    <section class="games-section" id="juegos">
-
-      <div class="section-heading">
-
-        <div>
-          <p class="section-label">COLECCIÓN</p>
-          <h2>Juegos populares</h2>
-        </div>
-
-        <div class="search-box">
-          <span>🔎</span>
-          <input
-            id="gameSearch"
-            type="search"
-            placeholder="Buscar juegos..."
-            autocomplete="off"
-          >
-        </div>
-
-      </div>
-
-
-      <!-- GAME GRID -->
-      <div class="game-grid" id="gameGrid">
-
-        <article
-          class="game-card"
-          data-name="snake"
-          data-category="arcade"
-        >
-
-          <div class="game-image snake-bg">
-            🐍
-          </div>
-
-          <div class="game-info">
-
-            <div class="game-title-row">
-              <h3>Snake</h3>
-              <span class="game-rating">⭐ 4.9</span>
-            </div>
-
-            <p>Haz crecer tu serpiente y consigue el récord.</p>
-
-            <div class="game-bottom">
-              <span class="category">Arcade</span>
-              <a
-  class="play-button"
-  href="games/snake.html"
-  target="_blank"
-  rel="noopener">
-  Jugar
-</a>
-            </div>
-
-          </div>
-
-        </article>
-
-
-        <article
-          class="game-card"
-          data-name="memory"
-          data-category="mental"
-        >
-
-          <div class="game-image memory-bg">
-            🧠
-          </div>
-
-          <div class="game-info">
-
-            <div class="game-title-row">
-              <h3>Memory</h3>
-              <span class="game-rating">⭐ 4.8</span>
-            </div>
-
-            <p>Encuentra las parejas antes de que se acabe el tiempo.</p>
-
-            <div class="game-bottom">
-              <span class="category">Mental</span>
-              <button
-                class="play-button"
-                type="button"
-                data-game="Memory"
-              >
-                Jugar
-              </button>
-            </div>
-
-          </div>
-
-        </article>
-
-
-        <article
-          class="game-card"
-          data-name="reaction test"
-          data-category="reflejos"
-        >
-
-          <div class="game-image reaction-bg">
-            ⚡
-          </div>
-
-          <div class="game-info">
-
-            <div class="game-title-row">
-              <h3>Reaction Test</h3>
-              <span class="game-rating">⭐ 4.9</span>
-            </div>
-
-            <p>¿Qué tan rápidos son tus reflejos?</p>
-
-            <div class="game-bottom">
-              <span class="category">Reflejos</span>
-              <button
-                class="play-button"
-                type="button"
-                data-game="Reaction Test"
-              >
-                Jugar
-              </button>
-            </div>
-
-          </div>
-
-        </article>
-
-
-        <article
-          class="game-card"
-          data-name="2048"
-          data-category="mental"
-        >
-
-          <div class="game-image puzzle-bg">
-            🔢
-          </div>
-
-          <div class="game-info">
-
-            <div class="game-title-row">
-              <h3>2048</h3>
-              <span class="game-rating">⭐ 4.7</span>
-            </div>
-
-            <p>Combina números y alcanza la ficha 2048.</p>
-
-            <div class="game-bottom">
-              <span class="category">Puzzle</span>
-              <button
-                class="play-button"
-                type="button"
-                data-game="2048"
-              >
-                Jugar
-              </button>
-            </div>
-
-          </div>
-
-        </article>
-
-
-        <article
-          class="game-card"
-          data-name="tic tac toe tres en raya"
-          data-category="casual"
-        >
-
-          <div class="game-image tic-bg">
-            ❌⭕
-          </div>
-
-          <div class="game-info">
-
-            <div class="game-title-row">
-              <h3>Tic Tac Toe</h3>
-              <span class="game-rating">⭐ 4.6</span>
-            </div>
-
-            <p>El clásico tres en raya para partidas rápidas.</p>
-
-            <div class="game-bottom">
-              <span class="category">Casual</span>
-              <button
-                class="play-button"
-                type="button"
-                data-game="Tic Tac Toe"
-              >
-                Jugar
-              </button>
-            </div>
-
-          </div>
-
-        </article>
-
-
-        <article
-          class="game-card"
-          data-name="click speed"
-          data-category="reflejos"
-        >
-
-          <div class="game-image click-bg">
-            🖱️
-          </div>
-
-          <div class="game-info">
-
-            <div class="game-title-row">
-              <h3>Click Speed</h3>
-              <span class="game-rating">⭐ 4.7</span>
-            </div>
-
-            <p>Haz todos los clics que puedas en pocos segundos.</p>
-
-            <div class="game-bottom">
-              <span class="category">Reflejos</span>
-              <button
-                class="play-button"
-                type="button"
-                data-game="Click Speed"
-              >
-                Jugar
-              </button>
-            </div>
-
-          </div>
-
-        </article>
-
-      </div>
-
-      <p id="noResults" class="no-results">
-        😕 No encontramos ningún juego.
-      </p>
-
-    </section>
-
-
-    <!-- CATEGORIES -->
-    <section class="categories-section" id="categorias">
-
-      <div class="section-heading centered">
-        <div>
-          <p class="section-label">DESCUBRE</p>
-          <h2>Explora por categoría</h2>
-        </div>
-      </div>
-
-      <div class="category-grid">
-
-        <button class="category-card" type="button" data-category-filter="arcade">
-          <span>🕹️</span>
-          <strong>Arcade</strong>
-          <small>Acción rápida</small>
-        </button>
-
-        <button class="category-card" type="button" data-category-filter="mental">
-          <span>🧠</span>
-          <strong>Mental</strong>
-          <small>Pon a prueba tu mente</small>
-        </button>
-
-        <button class="category-card" type="button" data-category-filter="reflejos">
-          <span>⚡</span>
-          <strong>Reflejos</strong>
-          <small>¿Eres rápido?</small>
-        </button>
-
-        <button class="category-card" type="button" data-category-filter="casual">
-          <span>🎯</span>
-          <strong>Casual</strong>
-          <small>Partidas rápidas</small>
-        </button>
-
-      </div>
-
-    </section>
-
-  </main>
-
-
-  <!-- MUSIC PLAYER -->
-  <aside class="music-player" aria-label="Reproductor de música">
-
-    <div class="music-info">
-
-      <div class="music-disc">
-        🎵
-      </div>
-
-      <div>
-        <strong id="songTitle">Playlist Gamer</strong>
-        <span id="songStatus">Música preparada</span>
-      </div>
-
+    <div class="status-badge">
+      <span class="status-dot"></span>
+      JUEGOS ONLINE GRATIS
     </div>
 
-    <div class="music-controls">
+    <h1>
+      Juega.
+      <span>Escucha.</span>
+      <br>
+      Diviértete.
+    </h1>
 
-      <button id="prevSong" type="button" aria-label="Canción anterior">
-        ⏮
-      </button>
+    <p>
+      Descubre juegos rápidos, divertidos y entretenidos.
+      Todo desde tu navegador.
+    </p>
 
-      <button id="playMusic" class="play-music" type="button" aria-label="Reproducir música">
-        ▶
-      </button>
+    <div class="hero-buttons">
 
-      <button id="nextSong" type="button" aria-label="Siguiente canción">
-        ⏭
-      </button>
+      <a href="#juegos" class="primary-button">
+        🎮 Explorar juegos
+      </a>
 
-    </div>
-
-    <div class="volume-control">
-      <span>🔊</span>
-      <input
-        id="volume"
-        type="range"
-        min="0"
-        max="100"
-        value="70"
-        aria-label="Volumen"
-      >
-    </div>
-
-  </aside>
-
-
-  <!-- GAME MODAL -->
-  <div
-    id="gameModal"
-    class="modal"
-    aria-hidden="true"
-  >
-
-    <div class="modal-content">
-
-      <button
-        id="closeModal"
-        class="close-modal"
-        type="button"
-        aria-label="Cerrar"
-      >
-        ×
-      </button>
-
-      <div id="modalIcon" class="modal-icon">
-        🎮
-      </div>
-
-      <h2 id="modalTitle">Juego</h2>
-
-      <p id="modalMessage">
-        Este juego estará disponible próximamente.
-      </p>
-
-      <button
-        id="modalAction"
-        class="primary-button modal-action"
-        type="button"
-      >
-        Entendido
+      <button id="randomGame" class="secondary-button" type="button">
+        🎲 Juego aleatorio
       </button>
 
     </div>
@@ -472,26 +76,558 @@
   </div>
 
 
-  <!-- FOOTER -->
-  <footer>
+  <div class="hero-visual">
 
-    <div class="footer-logo">
-      🎮 PLAYZONE
+    <div class="floating-card card-one">
+      🐍
+      <strong>Snake</strong>
+      <small>Arcade</small>
     </div>
 
-    <p>
-      Juegos, música y diversión directamente desde tu navegador.
-    </p>
+    <div class="floating-card card-two">
+      🧠
+      <strong>Memory</strong>
+      <small>Mentales</small>
+    </div>
 
-    <p class="copyright">
-      © 2026 PLAYZONE
-    </p>
+    <div class="floating-card card-three">
+      ⚡
+      <strong>Reaction</strong>
+      <small>Reflejos</small>
+    </div>
+
+    <div class="game-orb">
+      <span>🎮</span>
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- SEARCH -->
+<section class="games-section" id="juegos">
+
+  <div class="section-heading">
+
+    <div>
+      <p class="section-label">COLECCIÓN</p>
+      <h2>Juegos populares</h2>
+    </div>
+
+    <div class="search-box">
+      <span>🔎</span>
+
+      <input
+        id="gameSearch"
+        type="search"
+        placeholder="Buscar juegos..."
+        autocomplete="off"
+      >
+
+    </div>
+
+  </div>
+
+
+  <!-- GAME GRID -->
+  <div class="game-grid" id="gameGrid">
+
+
+    <!-- SNAKE -->
+    <article
+      class="game-card"
+      data-name="snake"
+      data-category="arcade"
+    >
+
+      <div class="game-image snake-bg">
+        🐍
+      </div>
+
+      <div class="game-info">
+
+        <div class="game-title-row">
+          <h3>Snake</h3>
+          <span class="game-rating">⭐ 4.9</span>
+        </div>
+
+        <p>
+          Haz crecer tu serpiente y consigue el récord.
+        </p>
+
+        <div class="game-bottom">
+
+          <span class="category">
+            Arcade
+          </span>
+
+          <a
+            class="play-button"
+            href="games/snake.html"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Jugar
+          </a>
+
+        </div>
+
+      </div>
+
+    </article>
+
+
+    <!-- MEMORY -->
+    <article
+      class="game-card"
+      data-name="memory"
+      data-category="mental"
+    >
+
+      <div class="game-image memory-bg">
+        🧠
+      </div>
+
+      <div class="game-info">
+
+        <div class="game-title-row">
+          <h3>Memory</h3>
+          <span class="game-rating">⭐ 4.8</span>
+        </div>
+
+        <p>
+          Encuentra las parejas antes de que se acabe el tiempo.
+        </p>
+
+        <div class="game-bottom">
+
+          <span class="category">
+            Mental
+          </span>
+
+          <a
+            class="play-button"
+            href="games/memory.html"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Jugar
+          </a>
+
+        </div>
+
+      </div>
+
+    </article>
+
+
+    <!-- REACTION TEST -->
+    <article
+      class="game-card"
+      data-name="reaction test"
+      data-category="reflejos"
+    >
+
+      <div class="game-image reaction-bg">
+        ⚡
+      </div>
+
+      <div class="game-info">
+
+        <div class="game-title-row">
+          <h3>Reaction Test</h3>
+          <span class="game-rating">⭐ 4.9</span>
+        </div>
+
+        <p>
+          ¿Qué tan rápidos son tus reflejos?
+        </p>
+
+        <div class="game-bottom">
+
+          <span class="category">
+            Reflejos
+          </span>
+
+          <a
+            class="play-button"
+            href="games/reaction.html"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Jugar
+          </a>
+
+        </div>
+
+      </div>
+
+    </article>
+
+
+    <!-- 2048 -->
+    <article
+      class="game-card"
+      data-name="2048"
+      data-category="mental"
+    >
+
+      <div class="game-image puzzle-bg">
+        🔢
+      </div>
+
+      <div class="game-info">
+
+        <div class="game-title-row">
+          <h3>2048</h3>
+          <span class="game-rating">⭐ 4.7</span>
+        </div>
+
+        <p>
+          Combina números y alcanza la ficha 2048.
+        </p>
+
+        <div class="game-bottom">
+
+          <span class="category">
+            Puzzle
+          </span>
+
+          <a
+            class="play-button"
+            href="games/2048.html"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Jugar
+          </a>
+
+        </div>
+
+      </div>
+
+    </article>
+
+
+    <!-- TIC TAC TOE -->
+    <article
+      class="game-card"
+      data-name="tic tac toe tres en raya"
+      data-category="casual"
+    >
+
+      <div class="game-image tic-bg">
+        ❌⭕
+      </div>
+
+      <div class="game-info">
+
+        <div class="game-title-row">
+          <h3>Tic Tac Toe</h3>
+          <span class="game-rating">⭐ 4.6</span>
+        </div>
+
+        <p>
+          El clásico tres en raya para partidas rápidas.
+        </p>
+
+        <div class="game-bottom">
+
+          <span class="category">
+            Casual
+          </span>
+
+          <a
+            class="play-button"
+            href="games/tic-tac-toe.html"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Jugar
+          </a>
+
+        </div>
+
+      </div>
+
+    </article>
+
+
+    <!-- CLICK SPEED -->
+    <article
+      class="game-card"
+      data-name="click speed"
+      data-category="reflejos"
+    >
+
+      <div class="game-image click-bg">
+        🖱️
+      </div>
+
+      <div class="game-info">
+
+        <div class="game-title-row">
+          <h3>Click Speed</h3>
+          <span class="game-rating">⭐ 4.7</span>
+        </div>
+
+        <p>
+          Haz todos los clics que puedas en pocos segundos.
+        </p>
+
+        <div class="game-bottom">
+
+          <span class="category">
+            Reflejos
+          </span>
+
+          <a
+            class="play-button"
+            href="games/click-speed.html"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Jugar
+          </a>
+
+        </div>
+
+      </div>
+
+    </article>
+
+
+  </div>
+
+
+  <p id="noResults" class="no-results">
+    😕 No encontramos ningún juego.
+  </p>
+
+</section>
+
+
+<!-- CATEGORIES -->
+<section class="categories-section" id="categorias">
+
+  <div class="section-heading centered">
+
+    <div>
+      <p class="section-label">DESCUBRE</p>
+      <h2>Explora por categoría</h2>
+    </div>
+
+  </div>
+
+
+  <div class="category-grid">
+
+    <button
+      class="category-card"
+      type="button"
+      data-category-filter="arcade"
+    >
+      <span>🕹️</span>
+      <strong>Arcade</strong>
+      <small>Acción rápida</small>
+    </button>
+
+
+    <button
+      class="category-card"
+      type="button"
+      data-category-filter="mental"
+    >
+      <span>🧠</span>
+      <strong>Mental</strong>
+      <small>Pon a prueba tu mente</small>
+    </button>
+
+
+    <button
+      class="category-card"
+      type="button"
+      data-category-filter="reflejos"
+    >
+      <span>⚡</span>
+      <strong>Reflejos</strong>
+      <small>¿Eres rápido?</small>
+    </button>
+
+
+    <button
+      class="category-card"
+      type="button"
+      data-category-filter="casual"
+    >
+      <span>🎯</span>
+      <strong>Casual</strong>
+      <small>Partidas rápidas</small>
+    </button>
+
+  </div>
+
+</section>
+```
+
+  </main>
+
+  <!-- MUSIC PLAYER -->
+
+  <aside
+    class="music-player"
+    aria-label="Reproductor de música"
+  >
+
+```
+<div class="music-info">
+
+  <div class="music-disc">
+    🎵
+  </div>
+
+  <div>
+    <strong id="songTitle">
+      Playlist Gamer
+    </strong>
+
+    <span id="songStatus">
+      Música preparada
+    </span>
+  </div>
+
+</div>
+
+
+<div class="music-controls">
+
+  <button
+    id="prevSong"
+    type="button"
+    aria-label="Canción anterior"
+  >
+    ⏮
+  </button>
+
+
+  <button
+    id="playMusic"
+    class="play-music"
+    type="button"
+    aria-label="Reproducir música"
+  >
+    ▶
+  </button>
+
+
+  <button
+    id="nextSong"
+    type="button"
+    aria-label="Siguiente canción"
+  >
+    ⏭
+  </button>
+
+</div>
+
+
+<div class="volume-control">
+
+  <span>🔊</span>
+
+  <input
+    id="volume"
+    type="range"
+    min="0"
+    max="100"
+    value="70"
+    aria-label="Volumen"
+  >
+
+</div>
+```
+
+  </aside>
+
+  <!-- GAME MODAL -->
+
+  <div
+    id="gameModal"
+    class="modal"
+    aria-hidden="true"
+  >
+
+```
+<div class="modal-content">
+
+  <button
+    id="closeModal"
+    class="close-modal"
+    type="button"
+    aria-label="Cerrar"
+  >
+    ×
+  </button>
+
+
+  <div
+    id="modalIcon"
+    class="modal-icon"
+  >
+    🎮
+  </div>
+
+
+  <h2 id="modalTitle">
+    Juego
+  </h2>
+
+
+  <p id="modalMessage">
+    Este juego estará disponible próximamente.
+  </p>
+
+
+  <button
+    id="modalAction"
+    class="primary-button modal-action"
+    type="button"
+  >
+    Entendido
+  </button>
+
+</div>
+```
+
+  </div>
+
+  <!-- FOOTER -->
+
+  <footer>
+
+```
+<div class="footer-logo">
+  🎮 PLAYZONE
+</div>
+
+<p>
+  Juegos, música y diversión directamente desde tu navegador.
+</p>
+
+<p class="copyright">
+  © 2026 PLAYZONE
+</p>
+```
 
   </footer>
-
 
   <script src="script.js"></script>
 
 </body>
 </html>
 ```
+
+**Ahora haz solamente esto:** reemplaza todo tu `index.html` por este código → **Commit changes** → espera a que publique → `Ctrl + Shift + R` → prueba **Snake**.
+
+Si Snake abre, ya tenemos resuelto el problema de los botones. Después nos ocupamos del **juego aleatorio y la música** sin volver a romper los juegos.
