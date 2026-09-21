@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Snake — PLAYZONE</title>
+  <link rel="stylesheet" href="../style.css">
+
+  <style>
+    .game-page {
+      min-height: 100vh;
+      padding: 100px 20px 120px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .game-container {
+      width: min(700px, 100%);
+      text-align: center;
+    }
+
+    .game-container h1 {
+      font-size: clamp(2rem, 6vw, 4rem);
+      margin-bottom: 10px;
+    }
+
+    .game-container h1 span {
+      color: #a855f7;
+    }
+
+    .score {
+      font-size: 1.2rem;
+      margin: 20px;
+    }
+
+    canvas {
+      width: min(500px, 90vw);
+      height: min(500px, 90vw);
+      background: #090914;
+      border: 2px solid #8b5cf6;
+      border-radius: 16px;
+      box-shadow: 0 0 40px rgba(139, 92, 246, .25);
+    }
+
+    .controls {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .controls button,
+    .back-button {
+      border: 0;
+      border-radius: 12px;
+      padding: 12px 20px;
+      cursor: pointer;
+      background: #171729;
+      color: white;
+      font-size: 1rem;
+    }
+
+    .controls button:hover,
+    .back-button:hover {
+      background: #7c3aed;
+    }
+
+    .back-button {
+      display: inline-block;
+      margin-bottom: 25px;
+      text-decoration: none;
+    }
+
+    #message {
+      min-height: 25px;
+      margin: 15px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="game-page">
+    <div class="game-container">
+
+      <a href="../index.html" class="back-button">
+        ← Volver a PLAYZONE
+      </a>
+
+      <h1>🐍 <span>Snake</span></h1>
+      <p>Usa las flechas o WASD para moverte.</p>
+
+      <div class="score">
+        Puntuación: <strong id="score">0</strong>
+      </div>
+
+      <canvas id="game" width="500" height="500"></canvas>
+
+      <p id="message"></p>
+
+      <div class="controls">
+        <button id="up">⬆️</button>
+        <button id="left">⬅️</button>
+        <button id="down">⬇️</button>
+        <button id="right">➡️</button>
+        <button id="restart">🔄 Reiniciar</button>
+      </div>
+
+    </div>
+  </main>
+
+  <script>
+    const canvas = document.getElementById("game");
+    const ctx = canvas.getContext("2d");
+
+    const scoreElement = document.getElementById("score");
+    const message = document.getElementById("message");
+
+    const size = 25;
+    const cells = canvas.width / size;
+
+    let snake;
+    let food;
+    let direction;
+    let nextDirection;
+    let score;
+    let gameOver;
+    let gameLoop;
+
+    function startGame() {
+      snake = [
+        { x: 10, y: 10 },
+        { x: 9, y: 10 },
+        { x: 8, y: 10 }
+      ];
+
+      direction = "right";
+      nextDirection = "right";
+      score = 0;
+      gameOver = false;
+
+      scoreElement.textContent = score;
+      message.textContent = "";
+
+      createFood();
+
+      clearInterval(gameLoop);
+      gameLoop = setInterval(update, 110);
+
+      draw();
+    }
+
+    function createFood() {
+      do {
+        food = {
+          x: Math.floor(Math.random() * cells),
+          y: Math.floor(Math.random() * cells)
+        };
+      } while (
+        snake.some(part =>
+          part.x === food.x && part.y === food.y
+        )
+      );
+    }
+
+    function update() {
+      if (gameOver) return;
+
+      direction = nextDirection;
+
+      const head = { ...snake[0] };
+
+      if (direction === "up") head.y--;
+      if (direction === "down") head.y++;
+      if (direction === "left") head.x--;
+      if (direction === "right") head.x++;
+
+      if (
+        head.x < 0 ||
+        head.x >= cells ||
+        head.y < 0 ||
+        head.y >= cells ||
+        snake.some(part =>
+          part.x === head.x && part.y === head.y
+        )
+      ) {
+        endGame();
+        return;
+      }
+
+      snake.unshift(head);
+
+      if (head.x === food.x && head.y === food.y) {
+        score++;
+        scoreElement.textContent = score;
+        createFood();
+      } else {
+        snake.pop();
+      }
+
+      draw();
+    }
+
+    function draw() {
+      ctx.fillStyle = "#090914";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      ctx.fillStyle = "#ef4444";
+      ctx.beginPath();
+      ctx.arc(
+        food.x * size + size / 2,
+        food.y * size + size / 2,
+        size / 2 - 4,
+        0,
+        Math.PI * 2
+      );
+      ctx.fill();
+
+      snake.forEach((part, index) => {
+        ctx.fillStyle = index === 0 ? "#c084fc" : "#8b5cf6";
+
+        ctx.fillRect(
+          part.x * size + 2,
+          part.y * size + 2,
+          size - 4,
+          size - 4
+        );
+      });
+    }
+
+    function endGame() {
+      gameOver = true;
+      clearInterval(gameLoop);
+      message.textContent =
+        `💥 Game Over — puntuación: ${score}`;
+    }
+
+    function changeDirection(newDirection) {
+      const opposite = {
+        up: "down",
+        down: "up",
+        left: "right",
+        right: "left"
+      };
+
+      if (opposite[direction] !== newDirection) {
+        nextDirection = newDirection;
+      }
+    }
+
+    document.addEventListener("keydown", event => {
+      const keys = {
+        ArrowUp: "up",
+        w: "up",
+        W: "up",
+        ArrowDown: "down",
+        s: "down",
+        S: "down",
+        ArrowLeft: "left",
+        a: "left",
+        A: "left",
+        ArrowRight: "right",
+        d: "right",
+        D: "right"
+      };
+
+      if (keys[event.key]) {
+        event.preventDefault();
+        changeDirection(keys[event.key]);
+      }
+    });
+
+    document.getElementById("up")
+      .onclick = () => changeDirection("up");
+
+    document.getElementById("down")
+      .onclick = () => changeDirection("down");
+
+    document.getElementById("left")
+      .onclick = () => changeDirection("left");
+
+    document.getElementById("right")
+      .onclick = () => changeDirection("right");
+
+    document.getElementById("restart")
+      .onclick = startGame;
+
+    startGame();
+  </script>
+
+</body>
+</html>
